@@ -274,30 +274,6 @@ function App() {
                 </div>
               </div>
 
-              {/* <div className="pci-devices-section"> */}
-              {/*   <h2>PCI Devices</h2> */}
-              {/*   <div className="table-container"> */}
-              {/*     <table className="pci-table"> */}
-              {/*       <thead> */}
-              {/*         <tr> */}
-              {/*           <th>Class</th> */}
-              {/*           <th>Vendor</th> */}
-              {/*           <th>Model</th> */}
-              {/*         </tr> */}
-              {/*       </thead> */}
-              {/*       <tbody> */}
-              {/*         {stats.pci_devices.map((device, index) => ( */}
-              {/*           <tr key={index}> */}
-              {/*             <td>{device.class}</td> */}
-              {/*             <td>{device.vendor}</td> */}
-              {/*             <td>{device.model}</td> */}
-              {/*           </tr> */}
-              {/*         ))} */}
-              {/*       </tbody> */}
-              {/*     </table> */}
-              {/*   </div> */}
-              {/* </div> */}
-
               <div className="controls-row">
                 <div className="power-control">
                   <h2>Power Controls</h2>
@@ -321,7 +297,7 @@ function App() {
                   </div>
                 </div>
 
-                {stats.fan_speeds.length > 0 && (
+                 {stats.fan_speeds.length > 0 && (
                   <div className="fan-speeds">
                     <h3>Fan Speeds</h3>
                     {stats.fan_speeds.map((fan, index) => (
@@ -332,6 +308,33 @@ function App() {
                     ))}
                   </div>
                 )}
+              </div>
+              <div className="memory-modules-section">
+                <h2>Memory Modules</h2>
+                <div className="table-container">
+                  <table className="memory-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Technology</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Speed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stats.memory_modules.map((module, index) => (
+                        <tr key={index}>
+                          <td>{module.id || 'N/A'}</td>
+                          <td>{module.technology || 'N/A'}</td>
+                          <td>{module.type || 'N/A'}</td>
+                          <td>{module.size || 'N/A'}</td>
+                          <td>{module.speed || 'N/A'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="pci-devices-section">
                 <h2>PCI Devices</h2>

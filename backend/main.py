@@ -115,7 +115,6 @@ def get_network_logs(lines=100):
         if platform.system() == "Linux":
             cmd = f"journalctl -n {lines} -p warning -t kernel | grep -i net"
         else:
-            # For Windows, you might want to use Event Viewer logs
             cmd = f"powershell Get-EventLog -LogName System -Newest {lines} | Where-Object {{'$_.Source -like \"*NET*\"'}}"
 
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
@@ -280,8 +279,7 @@ def get_system_logs(priority=None, time_filter=None, search_term=None):
         for line in result.stdout.splitlines():
             try:
                 log_entry = json.loads(line)
-                message = str(log_entry.get("MESSAGE", ""))  # Convert to string and handle None
-                # Only include if search term is empty or matches the message
+                message = str(log_entry.get("MESSAGE", ""))  
                 if not search_term or (isinstance(message, str) and search_term.lower() in message.lower()):
                     logs.append({
                         "timestamp": log_entry.get("__REALTIME_TIMESTAMP", ""),
@@ -292,12 +290,12 @@ def get_system_logs(priority=None, time_filter=None, search_term=None):
             except json.JSONDecodeError:
                 continue
             except AttributeError:
-                continue  # Skip entries where message is not a string
+                continue  
 
         return logs
     except Exception as e:
         print(f"Error getting system logs: {e}")
-        return []  # Return empty list on error
+        return [] 
 
 
 def get_system_type():
@@ -387,7 +385,7 @@ def get_pci_devices():
                         elif key == "Device":
                             current_device["model"] = value
                 else:
-                    if current_device:  # Empty line indicates end of device
+                    if current_device:  
                         devices.append(current_device)
                         current_device = {}
 
@@ -395,6 +393,50 @@ def get_pci_devices():
                 devices.append(current_device)
 
             return sorted(devices, key=lambda x: x.get("class", ""))
+        return []
+    except:
+        return []
+
+
+def get_memory_info():
+    try:
+        if platform.system() == "Linux":
+            cmd = "dmidecode -t memory"
+            result = subprocess.run(cmd.split(), capture_output=True, text=True)
+            memory_modules = []
+            current_module = {}
+            
+            for line in result.stdout.splitlines():
+                line = line.strip()
+                if "Memory Device" in line:
+                    if current_module:
+                        memory_modules.append(current_module)
+                    current_module = {}
+                elif ":" in line:
+                    key, value = line.split(":", 1)
+                    key = key.strip()
+                    value = value.strip()
+                    
+                    if key == "Size":
+                        if "No Module Installed" in value:
+                            current_module = {}
+                            continue
+                        current_module["size"] = value
+                    elif key == "Type":
+                        current_module["type"] = value
+                    elif key == "Speed":
+                        current_module["speed"] = value
+                    elif key == "Manufacturer":
+                        current_module["manufacturer"] = value
+                    elif key == "Memory Technology":
+                        current_module["technology"] = value
+                    elif key == "Part Number":
+                        current_module["id"] = value
+
+            if current_module:
+                memory_modules.append(current_module)
+                
+            return [module for module in memory_modules if module]
         return []
     except:
         return []
@@ -464,7 +506,7 @@ async def get_system_stats():
         except:
             fan_speeds = []
 
-        # Get processes
+        
         processes = []
         max_processes = 20  # Default value
         for proc in sorted(
@@ -473,7 +515,7 @@ async def get_system_stats():
             reverse=True,
         )[
             :max_processes
-        ]:  # Use the max_processes variable
+        ]:  
             try:
                 processes.append(
                     {
@@ -486,11 +528,10 @@ async def get_system_stats():
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 pass
 
-        # Get system uptime
         boot_time = datetime.fromtimestamp(psutil.boot_time())
         uptime = datetime.now() - boot_time
 
-        # Get OS information
+        
         if platform.system() == "Linux":
             os_info = {
                 "name": distro.name(pretty=True),
@@ -612,6 +653,7 @@ async def get_system_stats():
                 {"value": "7", "label": "Debug"},
             ],
             "pci_devices": get_pci_devices(),
+            "memory_modules": get_memory_info(),
         }
 
         return stats

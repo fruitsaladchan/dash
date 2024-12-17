@@ -2226,6 +2226,7 @@ html {
 
 .dark-mode .pci-table td {
   border-bottom: 1px solid #444;
+  color: #fff;
 }
 
 .dark-mode .pci-table tr:hover td {
@@ -2352,4 +2353,54 @@ html {
 .dark-mode .summary-value.disabled {
   background: #c6282833;
   color: #ef5350;
+}
+
+.memory-modules-section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .memory-modules-section {
+  background: #2d2d2d;
+}
+
+.memory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.memory-table th,
+.memory-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.memory-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #444;
+}
+
+.memory-table tr:hover td {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.dark-mode .memory-table th {
+  background: #333;
+  color: #fff;
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .memory-table td {
+  border-bottom: 1px solid #444;
+  color: #fff;
+}
+
+.dark-mode .memory-table tr:hover td {
+  background: rgba(255, 255, 255, 0.05);
 }
