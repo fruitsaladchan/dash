@@ -1,7 +1,6 @@
 # dash
 
-- dashboard that uses fastapi and python for backend and react for frontend
-- (im working on making a docker file to make setup easier)
+- dashboard that uses python with fastapi + psutil for backend and react for frontend
 
 # install
 
@@ -21,4 +20,4 @@ cd ../frontend
 npm start
 ```
 
-#screenshots
+# screenshots
