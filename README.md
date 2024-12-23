@@ -15,10 +15,9 @@ cd frontend && npm install
 # insturcionts
 
 ```
-cd backend
-uvicorn main:app --reload
-cd ../frontend
-npm start
+python start.py # this will open on localhost and main ip on port 3000 and 8000
+
+# you may also need to open port 3000 and 8000 
 ```
 
 # screenshots
