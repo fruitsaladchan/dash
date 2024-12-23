@@ -64,7 +64,8 @@ function App() {
   useEffect(() => {
     const connectWebSocket = () => {
       try {
-        wsRef.current = new WebSocket('ws://localhost:8000/ws');
+        const backendUrl = window.location.hostname;
+        wsRef.current = new WebSocket(`ws://${backendUrl}:8000/ws`);
 
         wsRef.current.onopen = () => {
           console.log('WebSocket Connected');
@@ -134,7 +135,8 @@ function App() {
   const handlePowerAction = async (action) => {
     if (window.confirm(`Are you sure you want to ${action} the system?`)) {
       try {
-        const response = await fetch(`http://localhost:8000/power/${action}`, {
+        const backendUrl = window.location.hostname;
+        const response = await fetch(`http://${backendUrl}:8000/power/${action}`, {
           method: 'POST'
         });
         const data = await response.json();

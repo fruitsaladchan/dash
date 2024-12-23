@@ -16,7 +16,7 @@ import getpass
 from typing import List, Dict
 import pwd
 import grp
-import spwd
+# import spwd
 from psutil._common import bytes2human
 
 app = FastAPI()
@@ -690,3 +690,9 @@ async def get_logs(priority: str = None, time_filter: str = None, search: str = 
     except Exception as e:
         print(f"Error getting logs: {e}")
         return []
+
+
+if __name__ == "__main__":
+    import uvicorn
+    host = "0.0.0.0"  # Listen on all interfaces
+    uvicorn.run("main:app", host=host, port=8000, log_level="critical")

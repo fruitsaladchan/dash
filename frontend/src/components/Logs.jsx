@@ -16,7 +16,8 @@ function Logs({ stats, darkMode, sidebarCollapsed, setDarkMode }) {
   const fetchLogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8000/logs?priority=${priority}&time_filter=${timeFilter}&search=${searchTerm}`);
+      const backendUrl = window.location.hostname;
+      const response = await fetch(`http://${backendUrl}:8000/logs?priority=${priority}&time_filter=${timeFilter}&search=${searchTerm}`);
       const data = await response.json();
       setLogs(data);
     } catch (error) {
