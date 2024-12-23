@@ -5,10 +5,11 @@
 # install
 
 ```
-cd backend
-pip install -r requirements.txt
-cd ../frontend
-npm install
+# Install backend dependencies
+pip install -r backend/requirements.txt
+
+# Install frontend dependencies
+cd frontend && npm install
 ```
 
 # insturcionts
