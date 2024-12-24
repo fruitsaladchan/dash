@@ -11,7 +11,7 @@ function Header({ title, darkMode, setDarkMode, stats }) {
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle theme"
         >
-          {darkMode ? '☀️' : '🌙'}
+          {darkMode ? <FaSun /> : <FaMoon />}
         </button>
         <div className="datetime">
           <span>{stats?.date}</span>

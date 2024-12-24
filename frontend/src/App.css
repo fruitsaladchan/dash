@@ -18,6 +18,8 @@ body.dark-mode {
 
 .theme-toggle {
   background: none;
+
+  color: #666;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
@@ -33,6 +35,19 @@ body.dark-mode {
 
 .theme-toggle:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .theme-toggle {
+  color: #fff;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: rotate(15deg);
 }
 
 .dark-mode .theme-toggle:hover {

@@ -205,7 +205,7 @@ function App() {
               <FaUserShield />
               <span className="nav-text">Accounts</span>
             </Link>
-            <Link to="https://github.com/fruitsaladchan/dash" className="nav-link" target="_blank">
+            <Link to="https://github.com/fruitsaladchan" className="nav-link" target="_blank">
               <FaGithub />
               <span className="nav-text">Source Code</span>
             </Link>
