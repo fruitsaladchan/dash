@@ -18,9 +18,7 @@ cd frontend && npm install
 python start.py # this will open on localhost and main ip on port 3000 and 8000
 
 # you may also need to open port 3000 and 8000 
-
-sudo ufw allow 3000 
-sudo ufw allow 8000
+sudo ufw allow 3000 && sudo ufw allow 8000 #for ufw
 ```
 
 # screenshots
