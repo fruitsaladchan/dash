@@ -8,16 +8,13 @@ import netifaces
 def get_network_info():
     network_info = []
     try:
-        # Get all network interfaces
         interfaces = netifaces.interfaces()
         
         for iface in interfaces:
             addrs = netifaces.ifaddresses(iface)
-            # Get IPv4 addresses
             if netifaces.AF_INET in addrs:
                 for addr in addrs[netifaces.AF_INET]:
                     ip = addr['addr']
-                    # Skip localhost
                     if not ip.startswith('127.'):
                         network_info.append((iface, ip))
     except Exception as e:
@@ -28,12 +25,10 @@ def get_network_info():
 def get_local_ip():
     network_info = get_network_info()
     if network_info:
-        # Return the first non-localhost IP
         return network_info[0][1]
     return "localhost"
 
 def main():
-    # Get all network interfaces and IPs
     network_info = get_network_info()
     local_ip = get_local_ip()
     
@@ -57,14 +52,12 @@ def main():
     print("\nPress Ctrl+C to stop all services\n")
 
     try:
-        # Start the backend with uvicorn
         backend_env = os.environ.copy()
         backend_env["PYTHONUNBUFFERED"] = "1"
         
         # Create a log file for backend errors
         backend_log = open('backend_error.log', 'w')
         
-        # Change to backend directory
         os.chdir('backend')
         backend = subprocess.Popen(
             [
@@ -81,18 +74,14 @@ def main():
         )
         os.chdir('..')
 
-        # Wait a moment to ensure backend starts
         sleep(2)
 
-        # Check if backend is still running
         if backend.poll() is not None:
             print("Backend failed to start! Check backend_error.log for details")
             return
 
-        # Change to frontend directory
         os.chdir('frontend')
 
-        # Start the frontend with error logging
         frontend_env = os.environ.copy()
         frontend_env["BROWSER"] = "none"
         frontend_env["HOST"] = "0.0.0.0"  # Set host in environment
@@ -113,7 +102,6 @@ def main():
             stderr=frontend_log
         )
 
-        # Change back to root directory
         os.chdir('..')
 
         print("Services are running...")
@@ -121,7 +109,6 @@ def main():
         for iface, ip in network_info:
             print(f"http://{ip}:3000")
         
-        # Keep the script running and check if processes are still alive
         while True:
             backend_status = backend.poll()
             frontend_status = frontend.poll()
